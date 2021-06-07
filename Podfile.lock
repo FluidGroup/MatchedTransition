@@ -1,0 +1,72 @@
+PODS:
+  - StorybookKit (1.6.0)
+  - StorybookKitTextureSupport (1.6.0):
+    - StorybookKit
+    - Texture/Core (>= 3.0.0)
+    - TextureBridging (>= 3.0.1)
+    - TextureSwiftSupport (>= 3.9.0)
+  - StorybookUI (1.6.0):
+    - StorybookKit (>= 1.3.0)
+  - Texture/Core (3.0.0)
+  - TextureBridging (3.0.1):
+    - Texture/Core (~> 3)
+  - TextureSwiftSupport (3.10.0):
+    - Texture/Core (>= 3)
+    - TextureSwiftSupport/Components (= 3.10.0)
+    - TextureSwiftSupport/Experiments (= 3.10.0)
+    - TextureSwiftSupport/Extensions (= 3.10.0)
+    - TextureSwiftSupport/LayoutSpecBuilders (= 3.10.0)
+  - TextureSwiftSupport/Components (3.10.0):
+    - Texture/Core (>= 3)
+    - TextureSwiftSupport/LayoutSpecBuilders
+  - TextureSwiftSupport/Experiments (3.10.0):
+    - Texture/Core (>= 3)
+  - TextureSwiftSupport/Extensions (3.10.0):
+    - Texture/Core (>= 3)
+  - TextureSwiftSupport/LayoutSpecBuilders (3.10.0):
+    - Texture/Core (>= 3)
+  - TypedTextAttributes (1.2.0)
+
+DEPENDENCIES:
+  - StorybookKit
+  - StorybookKitTextureSupport
+  - StorybookUI
+  - "TextureSwiftSupport (from `git@github.com:TextureCommunity/TextureSwiftSupport.git`, branch `muukii/swift5.5`)"
+  - "TypedTextAttributes (from `git@github.com:muukii/TypedTextAttributes.git`, branch `master`)"
+
+SPEC REPOS:
+  trunk:
+    - StorybookKit
+    - StorybookKitTextureSupport
+    - StorybookUI
+    - Texture
+    - TextureBridging
+
+EXTERNAL SOURCES:
+  TextureSwiftSupport:
+    :branch: muukii/swift5.5
+    :git: "git@github.com:TextureCommunity/TextureSwiftSupport.git"
+  TypedTextAttributes:
+    :branch: master
+    :git: "git@github.com:muukii/TypedTextAttributes.git"
+
+CHECKOUT OPTIONS:
+  TextureSwiftSupport:
+    :commit: 463e2b3318444fd018a15302e051efbb02a1b488
+    :git: "git@github.com:TextureCommunity/TextureSwiftSupport.git"
+  TypedTextAttributes:
+    :commit: 31229dc07fe6d47cd0fa9cb47fbd9c6889901dc8
+    :git: "git@github.com:muukii/TypedTextAttributes.git"
+
+SPEC CHECKSUMS:
+  StorybookKit: e9da951187f26b97a6d25a8db70d43c702c2395e
+  StorybookKitTextureSupport: 68885d93e264d7fe958e510f0f56971972b7c35f
+  StorybookUI: b9c17e32623e2d6cd9ffba29c665a4ddce3a87d1
+  Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
+  TextureBridging: b4035a6a9e64d061f3238f3dc08abd36b8eff8f7
+  TextureSwiftSupport: a31def8c674716ae111be64c19caab2471fee761
+  TypedTextAttributes: 624acbbc3bd067453d76f7408c6d6c5f0964d51b
+
+PODFILE CHECKSUM: 9ae4c4f9c8e0c64eb706679e3a4076b7f296059d
+
+COCOAPODS: 1.10.1
