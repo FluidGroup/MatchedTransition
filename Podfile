@@ -1,7 +1,7 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
-target 'Demo' do
+target 'Demo_MatchedTransition' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
@@ -10,6 +10,7 @@ target 'Demo' do
   pod 'StorybookKitTextureSupport'
   pod 'StorybookUI'
   pod 'TextureSwiftSupport', git: "git@github.com:TextureCommunity/TextureSwiftSupport.git", branch: "muukii/swift5.5"
+  pod 'TinyConstraints'
   # Pods for Demo
 
 end

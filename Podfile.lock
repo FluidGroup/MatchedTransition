@@ -25,6 +25,7 @@ PODS:
     - Texture/Core (>= 3)
   - TextureSwiftSupport/LayoutSpecBuilders (3.10.0):
     - Texture/Core (>= 3)
+  - TinyConstraints (4.0.1)
   - TypedTextAttributes (1.2.0)
 
 DEPENDENCIES:
@@ -32,6 +33,7 @@ DEPENDENCIES:
   - StorybookKitTextureSupport
   - StorybookUI
   - "TextureSwiftSupport (from `git@github.com:TextureCommunity/TextureSwiftSupport.git`, branch `muukii/swift5.5`)"
+  - TinyConstraints
   - "TypedTextAttributes (from `git@github.com:muukii/TypedTextAttributes.git`, branch `master`)"
 
 SPEC REPOS:
@@ -41,6 +43,7 @@ SPEC REPOS:
     - StorybookUI
     - Texture
     - TextureBridging
+    - TinyConstraints
 
 EXTERNAL SOURCES:
   TextureSwiftSupport:
@@ -65,8 +68,9 @@ SPEC CHECKSUMS:
   Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
   TextureBridging: b4035a6a9e64d061f3238f3dc08abd36b8eff8f7
   TextureSwiftSupport: a31def8c674716ae111be64c19caab2471fee761
+  TinyConstraints: 8dd91295e56797648c7bc335dd20e1d91ec4c192
   TypedTextAttributes: 624acbbc3bd067453d76f7408c6d6c5f0964d51b
 
-PODFILE CHECKSUM: 9ae4c4f9c8e0c64eb706679e3a4076b7f296059d
+PODFILE CHECKSUM: a3dd152b3711494f42ee4863494d9aa740a0b501
 
 COCOAPODS: 1.10.1

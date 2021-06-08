@@ -1,11 +1,11 @@
 //
 
-import Foundation
 import MatchedTransition
 import StorybookKit
 import StorybookKitTextureSupport
 import TextureSwiftSupport
 import TypedTextAttributes
+import UIKit
 
 // MARK: Storybook
 
@@ -30,16 +30,15 @@ enum MatchedTransitionAnimator_BookView {
             }
             .addButton("Toggle") { node in
 
-              let makeView: () -> UIView = {
-                let view = UIView()
-                view.backgroundColor = .black
+              let makeView: () -> SnapshotView = {
+                let view = SnapshotView()
                 view.layer.setContinuousCornerRadius(10)
                 return view
               }
 
               let a = UIViewPropertyAnimator(duration: 3, dampingRatio: 1)
 
-              a.addSnapshotMovingAnimation(
+              let snapshot = a.addSnapshotMovingAnimation(
                 makeSnapshotViewIfNeeded: makeView,
                 from: node.fromBox.view,
                 to: node.toBox.view,
@@ -47,6 +46,18 @@ enum MatchedTransitionAnimator_BookView {
                 in: node.view,
                 movingMode: mode
               )
+
+              let snapshotAnimator = UIViewPropertyAnimator.init(duration: 2, dampingRatio: 1) {
+                if node.flag {
+                  snapshot.smallLabel.alpha = 1
+                  snapshot.largeLabel.alpha = 0
+                } else {
+                  snapshot.smallLabel.alpha = 0
+                  snapshot.largeLabel.alpha = 1
+                }
+              }
+
+              snapshotAnimator.startAnimation()
 
               a.startAnimation()
 
@@ -146,9 +157,9 @@ enum MatchedTransitionAnimator_BookView {
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
       LayoutSpec {
         HStackLayout(justifyContent: .spaceBetween) {
-          fromBox.preferredSize(.init(square: 20))
+          fromBox.preferredSize(.init(square: 40))
           SpacerLayout()
-          toBox.preferredSize(.init(square: 40))
+          toBox.preferredSize(.init(square: 60))
         }
         .padding(24)
       }
