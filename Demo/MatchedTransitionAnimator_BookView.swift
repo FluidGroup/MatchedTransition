@@ -1,7 +1,7 @@
 //
 
-import MatchedTransition
 import Foundation
+import MatchedTransition
 import StorybookKit
 import StorybookKitTextureSupport
 import TextureSwiftSupport
@@ -12,107 +12,123 @@ import TypedTextAttributes
 enum MatchedTransitionAnimator_BookView {
 
   static var body: BookView {
-    BookNavigationLink(title: "MatchedTransition") {
-      BookPush(title: "Sample") {
-        ExampleViewController()
-      }
-      BookPush(title: "MultipleAnimation") {
-        MultipleAnimationViewController()
-      }
+    BookGroup {
+      BookNavigationLink(title: "MatchedTransition - Texture") {
+        BookPush(title: "Sample") {
+          ExampleViewController()
+        }
+        BookPush(title: "MultipleAnimation") {
+          MultipleAnimationViewController()
+        }
 
-      BookSection(title: "Snapshot") {
+        BookSection(title: "Snapshot") {
 
-        BookForEach(data: [.center, .frame, .transform] as [UIViewPropertyAnimator.MovingMode]) {
-          mode in
-          BookNodePreview(expandsWidth: true) {
-            AnimationContainerNode()
-          }
-          .addButton("Toggle") { node in
-
-            let makeView: () -> UIView = {
-              let view = UIView()
-              view.backgroundColor = .black
-              view.layer.setContinuousCornerRadius(10)
-              return view
+          BookForEach(data: [.center, .frame, .transform] as [UIViewPropertyAnimator.MovingMode]) {
+            mode in
+            BookNodePreview(expandsWidth: true) {
+              AnimationContainerNode()
             }
+            .addButton("Toggle") { node in
 
-            let a = UIViewPropertyAnimator(duration: 3, dampingRatio: 1)
+              let makeView: () -> UIView = {
+                let view = UIView()
+                view.backgroundColor = .black
+                view.layer.setContinuousCornerRadius(10)
+                return view
+              }
 
-            a.addMovingAnimation(
-              makeSnapshotViewIfNeeded: makeView,
-              from: node.fromBox.view,
-              to: node.toBox.view,
-              isReversed: node.flag,
-              in: node.view,
-              movingMode: mode
-            )
+              let a = UIViewPropertyAnimator(duration: 3, dampingRatio: 1)
 
-            a.startAnimation()
+              a.addSnapshotMovingAnimation(
+                makeSnapshotViewIfNeeded: makeView,
+                from: node.fromBox.view,
+                to: node.toBox.view,
+                isReversed: node.flag,
+                in: node.view,
+                movingMode: mode
+              )
 
-            node.flag.toggle()
+              a.startAnimation()
 
+              node.flag.toggle()
+
+            }
+            .title("Mode: \(mode) - Animates a snapshot between `From` and To view.")
           }
-          .title("Mode: \(mode) - Animates a snapshot between `From` and To view.")
         }
+
+        BookSection(title: "Concrete using toView") {
+
+          BookForEach(
+            data: [
+              //            .center,
+              //            .frame,
+              .transform
+            ] as [UIViewPropertyAnimator.MovingMode]
+          ) {
+            mode in
+            BookNodePreview(expandsWidth: true) {
+              AnimationContainerNode()
+            }
+            .addButton("Toggle") { node in
+
+              let a = UIViewPropertyAnimator(duration: 3, dampingRatio: 1)
+
+              a.addMovingAnimation(
+                from: node.fromBox.view,
+                to: node.toBox.view,
+                sourceView: node.toBox.view,
+                isReversed: node.flag,
+                in: node.view
+              )
+
+              a.startAnimation()
+
+              node.flag.toggle()
+
+            }
+            .title("Mode: \(mode) - Animates a concrete view - Source: toView")
+          }
+        }
+
+        BookSection(title: "Concrete using fromView") {
+          BookForEach(
+            data: [
+              //            .center,
+              //            .frame,
+              .transform
+            ] as [UIViewPropertyAnimator.MovingMode]
+          ) {
+            mode in
+            BookNodePreview(expandsWidth: true) {
+              AnimationContainerNode()
+            }
+            .addButton("Toggle") { node in
+
+              let a = UIViewPropertyAnimator(duration: 3, dampingRatio: 1)
+
+              a.addMovingAnimation(
+                from: node.fromBox.view,
+                to: node.toBox.view,
+                sourceView: node.fromBox.view,
+                isReversed: node.flag,
+                in: node.view
+              )
+
+              a.startAnimation()
+
+              node.flag.toggle()
+
+            }
+            .title("Mode: \(mode) - Animates a concrete view - Source: fromView")
+          }
+        }
+
       }
 
-      BookSection(title: "Concrete using toView") {
-
-        BookForEach(data: [.center, .frame, .transform] as [UIViewPropertyAnimator.MovingMode]) {
-          mode in
-          BookNodePreview(expandsWidth: true) {
-            AnimationContainerNode()
-          }
-          .addButton("Toggle") { node in
-
-            let a = UIViewPropertyAnimator(duration: 3, dampingRatio: 1)
-
-            a.addMovingAnimation(
-              from: node.fromBox.view,
-              to: node.toBox.view,
-              sourceView: node.toBox.view,
-              isReversed: node.flag,
-              in: node.view,
-              movingMode: mode
-            )
-
-            a.startAnimation()
-
-            node.flag.toggle()
-
-          }
-          .title("Mode: \(mode) - Animates a concrete view - Source: toView")
-        }
+      BookNavigationLink(title: "MatchedTransition - UIKit") {
+        BookText("TODO")
       }
-
-      BookSection(title: "Concrete using fromView") {
-        BookForEach(data: [.center, .frame, .transform] as [UIViewPropertyAnimator.MovingMode]) {
-          mode in
-          BookNodePreview(expandsWidth: true) {
-            AnimationContainerNode()
-          }
-          .addButton("Toggle") { node in
-
-            let a = UIViewPropertyAnimator(duration: 3, dampingRatio: 1)
-
-            a.addMovingAnimation(
-              from: node.fromBox.view,
-              to: node.toBox.view,
-              sourceView: node.fromBox.view,
-              isReversed: node.flag,
-              in: node.view,
-              movingMode: mode
-            )
-
-            a.startAnimation()
-
-            node.flag.toggle()
-
-          }
-          .title("Mode: \(mode) - Animates a concrete view - Source: fromView")
-        }
-      }
-
     }
   }
 

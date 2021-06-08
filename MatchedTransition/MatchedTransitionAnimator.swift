@@ -5,28 +5,44 @@ import UIKit
 
 // MARK: Implementations
 
+/*
+private struct Key: Hashable {
+  let fromKey: ObjectIdentifier
+  let toKey: ObjectIdentifier
+  let containerKey: ObjectIdentifier
+  let snapshotTypeName: String
+}
+ */
+
 private let _snapshotStorage: NSMapTable<NSString, UIView> = .strongToWeakObjects()
 
-private func _makeSnapshotViewIfNeeded(
+private func _makeSnapshotViewIfNeeded<SnapshotView: UIView>(
   from fromView: UICoordinateSpace,
   to toView: UICoordinateSpace,
   in containerView: UICoordinateSpace,
-  make: () -> UIView
-) -> UIView {
+  make: () -> SnapshotView
+) -> SnapshotView {
 
   let key =
-    "\(ObjectIdentifier(fromView)),\(ObjectIdentifier(toView)),\(ObjectIdentifier(containerView))"
+  "\(ObjectIdentifier(fromView)),\(ObjectIdentifier(toView)),\(ObjectIdentifier(containerView)),\(String(reflecting: SnapshotView.self))"
     as NSString
 
-  if let view = _snapshotStorage.object(forKey: key) {
-    return view
+  func makeAndStore() -> SnapshotView {
+    let newView = make()
+    _snapshotStorage.setObject(newView, forKey: key)
+    return newView
   }
 
-  let newView = make()
+  guard let view = _snapshotStorage.object(forKey: key) else {
+    return makeAndStore()
+  }
 
-  _snapshotStorage.setObject(newView, forKey: key)
+  guard let typedView = view as? SnapshotView else {
+    assertionFailure("Unable to cast to \(SnapshotView.self)")
+    return makeAndStore()
+  }
 
-  return newView
+  return typedView
 }
 
 extension UIView {
@@ -58,14 +74,14 @@ extension UIViewPropertyAnimator {
     case transform
   }
 
-  public func addMovingAnimation(
-    makeSnapshotViewIfNeeded: () -> UIView,
+  public func addSnapshotMovingAnimation<SnapshotView: UIView>(
+    makeSnapshotViewIfNeeded: () -> SnapshotView,
     from fromView: UIView,
     to toView: UIView,
     isReversed: Bool,
     in containerView: UIView,
     movingMode: MovingMode = .transform
-  ) {
+  ) -> SnapshotView {
 
     let view = _makeSnapshotViewIfNeeded(
       from: fromView,
@@ -74,7 +90,7 @@ extension UIViewPropertyAnimator {
       make: makeSnapshotViewIfNeeded
     )
 
-    addMovingAnimation(
+    let snapshotView = addSnapshotMovingAnimation(
       snapshotView: view,
       from: fromView,
       to: toView,
@@ -83,16 +99,19 @@ extension UIViewPropertyAnimator {
       movingMode: movingMode
     )
 
+    return snapshotView
+
   }
 
-  public func addMovingAnimation(
-    snapshotView: UIView,
+  @discardableResult
+  public func addSnapshotMovingAnimation<SnapshotView: UIView>(
+    snapshotView: SnapshotView,
     from fromView: UIView,
     to toView: UIView,
     isReversed: Bool,
     in containerView: UIView,
     movingMode: MovingMode = .transform
-  ) {
+  ) -> SnapshotView {
 
     assert(
       snapshotView !== fromView || snapshotView !== toView,
@@ -118,23 +137,13 @@ extension UIViewPropertyAnimator {
 
             /// To apply transform correctly with setting up the frame without transforming
 
-            let f = toFrameInContainerView
-
-            snapshotView.center = .init(
-              x: f.midX,
-              y: f.midY
-            )
+            snapshotView.center = toFrameInContainerView.center
 
           } else {
 
             /// To apply transform correctly with setting up the frame without transforming
 
-            let f = fromFrameInContainerView
-
-            snapshotView.center = .init(
-              x: f.midX,
-              y: f.midY
-            )
+            snapshotView.center = fromFrameInContainerView.center
 
           }
 
@@ -148,21 +157,13 @@ extension UIViewPropertyAnimator {
           assert(containerView.subviews.contains(fromView))
           assert(fromView.isDescendant(of: containerView))
 
-          let f = fromFrameInContainerView
-          snapshotView.center = .init(
-            x: f.midX,
-            y: f.midY
-          )
+          snapshotView.center = fromFrameInContainerView.center
 
         } else {
           assert(containerView.subviews.contains(toView))
           assert(toView.isDescendant(of: containerView))
 
-          let f = toFrameInContainerView
-          snapshotView.center = .init(
-            x: f.midX,
-            y: f.midY
-          )
+          snapshotView.center = toFrameInContainerView.center
 
         }
 
@@ -282,6 +283,7 @@ extension UIViewPropertyAnimator {
 
     }
 
+    return snapshotView
   }
 
   public func addMovingAnimation(
@@ -289,17 +291,64 @@ extension UIViewPropertyAnimator {
     to toView: UIView,
     sourceView: UIView,
     isReversed: Bool,
-    in containerView: UIView,
-    movingMode: MovingMode = .transform
+    in containerView: UIView
   ) {
 
     let fromFrameInContainerView = fromView.relativeFrameWithoutTransforming(in: containerView)
     let toFrameInContainerView = toView.relativeFrameWithoutTransforming(in: containerView)
 
-    switch movingMode {
+    let _movingMode: MovingMode = .transform
+
+    switch _movingMode {
     case .center:
-      break
+
+      // FIXME: Find ways to how to keep the original value.
+      assertionFailure("Unimplemented")
+
+      if toView === sourceView {
+//        if toView.isAnimatingByPropertyAnimator == false {
+//          if isReversed == false {
+//            toView.transform = Self.makeCGAffineTransform(
+//              from: toFrameInContainerView,
+//              to: fromFrameInContainerView
+//            )
+//          }
+//        }
+      }
+
+      addAnimations {
+
+        if fromView === sourceView {
+
+          if isReversed {
+            // sourceView(`fromView`) move back from `toView`.
+            fromView.center = fromFrameInContainerView.center
+          } else {
+            // sourceView(`fromView`) moves to `toView`.
+            fromView.center = toFrameInContainerView.center
+          }
+
+        } else if toView === sourceView {
+
+          if isReversed {
+            // sourceView(`toView`) move to `fromView`.
+            toView.center = fromFrameInContainerView.center
+          } else {
+            // sourceView(`toView`) moves back from `fromView`.
+            toView.center = toFrameInContainerView.center
+          }
+
+        } else {
+          assertionFailure("sourceView must be either fromView or toView.")
+        }
+
+      }
+
     case .frame:
+
+      // FIXME: Find ways to how to keep the original value.
+      assertionFailure("Unimplemented")
+
       break
     case .transform:
       if toView === sourceView {
@@ -363,4 +412,11 @@ extension UIViewPropertyAnimator {
     )
   }
 
+}
+
+extension CGRect {
+
+  var center: CGPoint {
+    return .init(x: midX, y: midY)
+  }
 }
