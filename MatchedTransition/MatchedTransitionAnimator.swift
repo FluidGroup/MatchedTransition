@@ -73,7 +73,8 @@ extension UIViewPropertyAnimator {
     case frame
     case transform
   }
-
+  
+  @discardableResult
   public func addSnapshotMovingAnimation<SnapshotView: UIView>(
     makeSnapshotViewIfNeeded: () -> SnapshotView,
     from fromView: UIView,
