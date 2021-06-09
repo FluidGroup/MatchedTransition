@@ -10,20 +10,20 @@ PODS:
   - Texture/Core (3.0.0)
   - TextureBridging (3.0.1):
     - Texture/Core (~> 3)
-  - TextureSwiftSupport (3.10.0):
+  - TextureSwiftSupport (3.11.0):
     - Texture/Core (>= 3)
-    - TextureSwiftSupport/Components (= 3.10.0)
-    - TextureSwiftSupport/Experiments (= 3.10.0)
-    - TextureSwiftSupport/Extensions (= 3.10.0)
-    - TextureSwiftSupport/LayoutSpecBuilders (= 3.10.0)
-  - TextureSwiftSupport/Components (3.10.0):
+    - TextureSwiftSupport/Components (= 3.11.0)
+    - TextureSwiftSupport/Experiments (= 3.11.0)
+    - TextureSwiftSupport/Extensions (= 3.11.0)
+    - TextureSwiftSupport/LayoutSpecBuilders (= 3.11.0)
+  - TextureSwiftSupport/Components (3.11.0):
     - Texture/Core (>= 3)
     - TextureSwiftSupport/LayoutSpecBuilders
-  - TextureSwiftSupport/Experiments (3.10.0):
+  - TextureSwiftSupport/Experiments (3.11.0):
     - Texture/Core (>= 3)
-  - TextureSwiftSupport/Extensions (3.10.0):
+  - TextureSwiftSupport/Extensions (3.11.0):
     - Texture/Core (>= 3)
-  - TextureSwiftSupport/LayoutSpecBuilders (3.10.0):
+  - TextureSwiftSupport/LayoutSpecBuilders (3.11.0):
     - Texture/Core (>= 3)
   - TinyConstraints (4.0.1)
   - TypedTextAttributes (1.2.0)
@@ -32,7 +32,7 @@ DEPENDENCIES:
   - StorybookKit
   - StorybookKitTextureSupport
   - StorybookUI
-  - "TextureSwiftSupport (from `git@github.com:TextureCommunity/TextureSwiftSupport.git`, branch `muukii/swift5.5`)"
+  - "TextureSwiftSupport (from `git@github.com:TextureCommunity/TextureSwiftSupport.git`, branch `main`)"
   - TinyConstraints
   - "TypedTextAttributes (from `git@github.com:muukii/TypedTextAttributes.git`, branch `master`)"
 
@@ -47,7 +47,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   TextureSwiftSupport:
-    :branch: muukii/swift5.5
+    :branch: main
     :git: "git@github.com:TextureCommunity/TextureSwiftSupport.git"
   TypedTextAttributes:
     :branch: master
@@ -55,7 +55,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   TextureSwiftSupport:
-    :commit: 463e2b3318444fd018a15302e051efbb02a1b488
+    :commit: 364e9036152335269b3fee57fca71e5ef926b547
     :git: "git@github.com:TextureCommunity/TextureSwiftSupport.git"
   TypedTextAttributes:
     :commit: 31229dc07fe6d47cd0fa9cb47fbd9c6889901dc8
@@ -67,10 +67,10 @@ SPEC CHECKSUMS:
   StorybookUI: b9c17e32623e2d6cd9ffba29c665a4ddce3a87d1
   Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
   TextureBridging: b4035a6a9e64d061f3238f3dc08abd36b8eff8f7
-  TextureSwiftSupport: a31def8c674716ae111be64c19caab2471fee761
+  TextureSwiftSupport: b97859d0f3016f1af2f276bf6d987e916b23b150
   TinyConstraints: 8dd91295e56797648c7bc335dd20e1d91ec4c192
   TypedTextAttributes: 624acbbc3bd067453d76f7408c6d6c5f0964d51b
 
-PODFILE CHECKSUM: a3dd152b3711494f42ee4863494d9aa740a0b501
+PODFILE CHECKSUM: b5f222bc7077e2785712baf4008a91350f431e20
 
 COCOAPODS: 1.10.1

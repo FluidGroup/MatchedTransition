@@ -9,7 +9,7 @@ target 'Demo_MatchedTransition' do
   pod 'StorybookKit'
   pod 'StorybookKitTextureSupport'
   pod 'StorybookUI'
-  pod 'TextureSwiftSupport', git: "git@github.com:TextureCommunity/TextureSwiftSupport.git", branch: "muukii/swift5.5"
+  pod 'TextureSwiftSupport', git: "git@github.com:TextureCommunity/TextureSwiftSupport.git", branch: "main"
   pod 'TinyConstraints'
   # Pods for Demo
 
