@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "12.0"
   s.source       = { :git => "https://github.com/muukii/MatchedTransition.git", :tag => "#{s.version}" }
   s.source_files  = "MatchedTransition/**/*.swift"
-  s.swift_versions = ["5.4"]
+  s.swift_versions = ["5.3", "5.4"]
 end
