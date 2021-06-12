@@ -77,6 +77,11 @@ extension UIView {
 
   }
 
+  fileprivate func setFrameIgnoringTransforming(_ newFrame: CGRect) {
+    bounds.size = newFrame.size
+    center = newFrame.center
+  }
+
 }
 
 extension UIViewPropertyAnimator {
@@ -198,32 +203,21 @@ extension UIViewPropertyAnimator {
           if isReversed {
 
             /// To apply transform correctly with setting up the frame without transforming
-
-            let f = toFrameInContainerView
-
-            snapshotView.bounds.size = f.size
-            snapshotView.center = CGPoint(
-              x: f.midX,
-              y: f.midY
-            )
+            snapshotView.setFrameIgnoringTransforming(toFrameInContainerView)
+            snapshotView.layoutIfNeeded()
 
           } else {
 
             /// To apply transform correctly with setting up the frame without transforming
-
-            let f = fromFrameInContainerView
-
-            snapshotView.bounds.size = f.size
-            snapshotView.center = CGPoint(
-              x: f.midX,
-              y: f.midY
-            )
+            snapshotView.setFrameIgnoringTransforming(fromFrameInContainerView)
+            snapshotView.layoutIfNeeded()
 
           }
 
         }
 
       }
+
 
       addAnimations {
 
