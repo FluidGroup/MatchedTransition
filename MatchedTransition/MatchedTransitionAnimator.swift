@@ -47,6 +47,12 @@ private func _makeSnapshotViewIfNeeded<SnapshotView: UIView>(
 
 extension UIView {
 
+  public var __layerAnimations: [CAAnimation] {
+    (layer.animationKeys() ?? []).compactMap {
+      layer.animation(forKey: $0)
+    }
+  }
+
   fileprivate var isAnimatingByPropertyAnimator: Bool {
     (layer.animationKeys() ?? []).contains(where: {
       $0.hasPrefix("UIPacingAnimationForAnimatorsKey")
@@ -54,14 +60,21 @@ extension UIView {
   }
 
   /**
-   Returns a relative frame in view without applying transform.
+   Returns a relative frame in view.
    */
-  fileprivate func relativeFrameWithoutTransforming(in view: UICoordinateSpace) -> CGRect {
-    let currentTransform = transform
-    self.transform = .identity
-    let rect = self.convert(bounds, to: view)
-    self.transform = currentTransform
-    return rect
+  fileprivate func relativeFrame(in view: UICoordinateSpace, ignoresTransform: Bool) -> CGRect {
+
+    if ignoresTransform {
+      let currentTransform = transform
+      self.transform = .identity
+      let rect = self.convert(bounds, to: view)
+      self.transform = currentTransform
+      return rect
+    } else {
+      let rect = self.convert(bounds, to: view)
+      return rect
+    }
+
   }
 
 }
@@ -119,11 +132,11 @@ extension UIViewPropertyAnimator {
       "SnapshotView must be another instance from fromView:\(fromView) and toView:\(toView)"
     )
 
-    let fromFrameInContainerView = fromView.relativeFrameWithoutTransforming(in: containerView)
-    let toFrameInContainerView = toView.relativeFrameWithoutTransforming(in: containerView)
-
     switch movingMode {
     case .center:
+
+      let fromFrameInContainerView = fromView.relativeFrame(in: containerView, ignoresTransform: false)
+      let toFrameInContainerView = toView.relativeFrame(in: containerView, ignoresTransform: false)
 
       preparation: do {
 
@@ -172,6 +185,9 @@ extension UIViewPropertyAnimator {
 
     case .frame:
 
+      let fromFrameInContainerView = fromView.relativeFrame(in: containerView, ignoresTransform: false)
+      let toFrameInContainerView = toView.relativeFrame(in: containerView, ignoresTransform: false)
+
       preparation: do {
 
         if snapshotView.superview != containerView {
@@ -213,14 +229,12 @@ extension UIViewPropertyAnimator {
 
         if isReversed {
 
-          assert(containerView.subviews.contains(fromView))
-          assert(fromView.isDescendant(of: containerView))
+          assert(toView.isDescendant(of: containerView), "The target view for moving is not in the hierarchy of container view, snapshot might move the wrong position.")
           snapshotView.frame = fromFrameInContainerView
 
         } else {
 
-          assert(containerView.subviews.contains(toView))
-          assert(toView.isDescendant(of: containerView))
+          assert(toView.isDescendant(of: containerView), "The target view for moving is not in the hierarchy of container view, snapshot might move the wrong position.")
           snapshotView.frame = toFrameInContainerView
 
         }
@@ -229,6 +243,8 @@ extension UIViewPropertyAnimator {
 
     case .transform:
 
+      let fromFrameInContainerView = fromView.relativeFrame(in: containerView, ignoresTransform: true)
+      let toFrameInContainerView = toView.relativeFrame(in: containerView, ignoresTransform: true)
       preparation: do {
 
         if snapshotView.superview != containerView {
@@ -295,8 +311,8 @@ extension UIViewPropertyAnimator {
     in containerView: UIView
   ) {
 
-    let fromFrameInContainerView = fromView.relativeFrameWithoutTransforming(in: containerView)
-    let toFrameInContainerView = toView.relativeFrameWithoutTransforming(in: containerView)
+    let fromFrameInContainerView = fromView.relativeFrame(in: containerView, ignoresTransform: true)
+    let toFrameInContainerView = toView.relativeFrame(in: containerView, ignoresTransform: true)
 
     let _movingMode: MovingMode = .transform
 
