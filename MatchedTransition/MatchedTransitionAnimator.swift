@@ -91,7 +91,14 @@ extension UIViewPropertyAnimator {
     case frame
     case transform
   }
-  
+
+  /**
+   [For intruptible transition]
+   Adds the moving animation between from and to
+
+   - Parameters:
+     - makeSnapshotViewIfNeeded: A closure to create a view that moves between from and to. this closure won't run when found the current snapshot view.
+   */
   @discardableResult
   public func addSnapshotMovingAnimation<SnapshotView: UIView>(
     makeSnapshotViewIfNeeded: () -> SnapshotView,
@@ -122,6 +129,12 @@ extension UIViewPropertyAnimator {
 
   }
 
+  /**
+   Adds the moving animation between from and to
+
+   - Parameters:
+     - snapshotView: A view that moves between from and to.
+   */
   @discardableResult
   public func addSnapshotMovingAnimation<SnapshotView: UIView>(
     snapshotView: SnapshotView,
