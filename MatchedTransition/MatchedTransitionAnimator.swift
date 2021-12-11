@@ -150,6 +150,9 @@ extension UIViewPropertyAnimator {
       "SnapshotView must be another instance from fromView:\(fromView) and toView:\(toView)"
     )
 
+    /// a necessary operation to get the correct relative position.
+    containerView.layoutIfNeeded()
+
     switch movingMode {
     case .center:
 
