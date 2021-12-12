@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Storybook",
+    name: "MatchedTransition",
     platforms: [
         .iOS(.v11),
     ],
