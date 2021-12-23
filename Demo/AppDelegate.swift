@@ -15,3 +15,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
 }
+
+
+extension CALayer {
+
+  func dumpAllAnimations() {
+
+    let animations = (animationKeys() ?? []).compactMap {
+      animation(forKey: $0)
+    }
+
+    let result = animations.map {
+      "- \($0.debugDescription)"
+    }
+      .joined(separator: "\n")
+
+    print(result)
+
+  }
+}

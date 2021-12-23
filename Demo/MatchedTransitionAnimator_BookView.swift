@@ -61,6 +61,9 @@ enum MatchedTransitionAnimator_BookView {
 
               a.startAnimation()
 
+              print("Start")
+              snapshot.layer.dumpAllAnimations()
+
               node.flag.toggle()
 
             }

@@ -47,7 +47,7 @@ private func _makeSnapshotViewIfNeeded<SnapshotView: UIView>(
 
 extension UIView {
 
-  public var __layerAnimations: [CAAnimation] {
+  public var _matchedTransition_layerAnimations: [CAAnimation] {
     (layer.animationKeys() ?? []).compactMap {
       layer.animation(forKey: $0)
     }
@@ -62,7 +62,7 @@ extension UIView {
   /**
    Returns a relative frame in view.
    */
-  fileprivate func relativeFrame(in view: UICoordinateSpace, ignoresTransform: Bool) -> CGRect {
+  public func _matchedTransition_relativeFrame(in view: UICoordinateSpace, ignoresTransform: Bool) -> CGRect {
 
     if ignoresTransform {
       let currentTransform = transform
@@ -156,8 +156,8 @@ extension UIViewPropertyAnimator {
     switch movingMode {
     case .center:
 
-      let fromFrameInContainerView = fromView.relativeFrame(in: containerView, ignoresTransform: false)
-      let toFrameInContainerView = toView.relativeFrame(in: containerView, ignoresTransform: false)
+      let fromFrameInContainerView = fromView._matchedTransition_relativeFrame(in: containerView, ignoresTransform: false)
+      let toFrameInContainerView = toView._matchedTransition_relativeFrame(in: containerView, ignoresTransform: false)
 
       preparation: do {
 
@@ -206,8 +206,8 @@ extension UIViewPropertyAnimator {
 
     case .frame:
 
-      let fromFrameInContainerView = fromView.relativeFrame(in: containerView, ignoresTransform: false)
-      let toFrameInContainerView = toView.relativeFrame(in: containerView, ignoresTransform: false)
+      let fromFrameInContainerView = fromView._matchedTransition_relativeFrame(in: containerView, ignoresTransform: false)
+      let toFrameInContainerView = toView._matchedTransition_relativeFrame(in: containerView, ignoresTransform: false)
 
       preparation: do {
 
@@ -253,8 +253,8 @@ extension UIViewPropertyAnimator {
 
     case .transform:
 
-      let fromFrameInContainerView = fromView.relativeFrame(in: containerView, ignoresTransform: true)
-      let toFrameInContainerView = toView.relativeFrame(in: containerView, ignoresTransform: true)
+      let fromFrameInContainerView = fromView._matchedTransition_relativeFrame(in: containerView, ignoresTransform: true)
+      let toFrameInContainerView = toView._matchedTransition_relativeFrame(in: containerView, ignoresTransform: true)
       preparation: do {
 
         if snapshotView.superview != containerView {
@@ -321,8 +321,8 @@ extension UIViewPropertyAnimator {
     in containerView: UIView
   ) {
 
-    let fromFrameInContainerView = fromView.relativeFrame(in: containerView, ignoresTransform: true)
-    let toFrameInContainerView = toView.relativeFrame(in: containerView, ignoresTransform: true)
+    let fromFrameInContainerView = fromView._matchedTransition_relativeFrame(in: containerView, ignoresTransform: true)
+    let toFrameInContainerView = toView._matchedTransition_relativeFrame(in: containerView, ignoresTransform: true)
 
     let _movingMode: MovingMode = .transform
 
