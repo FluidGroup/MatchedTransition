@@ -162,7 +162,7 @@ enum MatchedTransitionAnimator_BookView {
         HStackLayout(justifyContent: .spaceBetween) {
           fromBox.preferredSize(.init(square: 40))
           SpacerLayout()
-          toBox.preferredSize(.init(square: 60))
+          toBox.preferredSize(.init(width: 30, height: 80))
         }
         .padding(24)
       }
