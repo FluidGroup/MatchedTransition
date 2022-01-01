@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MatchedTransition"
-  s.version      = "0.1.0"
+  s.version      = "1.1.0"
   s.summary      = "A primitive stuff for transition"
   s.description  = <<-DESC
   A library that provides stuff for transition in UIKit
