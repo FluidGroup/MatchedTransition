@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3EA2B6738EC00CFE5CA8A6F0 /* Pods_Demo_MatchedTransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC645706401B999C8AC4553 /* Pods_Demo_MatchedTransition.framework */; };
-		4BA5955E266925AA000CC703 /* MatchedTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 4BA5955C266925AA000CC703 /* MatchedTransition.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4BA5956B266925CB000CC703 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA5956A266925CB000CC703 /* AppDelegate.swift */; };
 		4BA5956F266925CB000CC703 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA5956E266925CB000CC703 /* ViewController.swift */; };
 		4BA59574266925CC000CC703 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BA59573266925CC000CC703 /* Assets.xcassets */; };
@@ -53,8 +52,6 @@
 		2116B4F34383218A8D9B0B88 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		2B10873E5029F3CC237C65B7 /* Pods-MatchedTransition.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatchedTransition.release.xcconfig"; path = "Target Support Files/Pods-MatchedTransition/Pods-MatchedTransition.release.xcconfig"; sourceTree = "<group>"; };
 		4BA59559266925AA000CC703 /* MatchedTransition.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MatchedTransition.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4BA5955C266925AA000CC703 /* MatchedTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchedTransition.h; sourceTree = "<group>"; };
-		4BA5955D266925AA000CC703 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4BA59568266925CB000CC703 /* Demo_MatchedTransition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo_MatchedTransition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BA5956A266925CB000CC703 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BA5956E266925CB000CC703 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -116,9 +113,7 @@
 		4BA5955B266925AA000CC703 /* MatchedTransition */ = {
 			isa = PBXGroup;
 			children = (
-				4BA5955C266925AA000CC703 /* MatchedTransition.h */,
 				4BC2DFC2266ECDB2007D6064 /* MatchedTransitionAnimator.swift */,
-				4BA5955D266925AA000CC703 /* Info.plist */,
 			);
 			path = MatchedTransition;
 			sourceTree = "<group>";
@@ -168,7 +163,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BA5955E266925AA000CC703 /* MatchedTransition.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,7 +504,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MatchedTransition/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -536,7 +529,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MatchedTransition/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
