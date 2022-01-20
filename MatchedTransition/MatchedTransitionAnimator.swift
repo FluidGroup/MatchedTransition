@@ -65,10 +65,19 @@ extension UIView {
   public func _matchedTransition_relativeFrame(in view: UICoordinateSpace, ignoresTransform: Bool) -> CGRect {
 
     if ignoresTransform {
+
+      CATransaction.begin()
+      CATransaction.setDisableActions(true)
+
       let currentTransform = transform
+      let currentAlpha = alpha
       self.transform = .identity
+      self.alpha = 0
       let rect = self.convert(bounds, to: view)
       self.transform = currentTransform
+      self.alpha = currentAlpha
+      
+      CATransaction.commit()
       return rect
     } else {
       let rect = self.convert(bounds, to: view)
