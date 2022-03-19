@@ -2,8 +2,43 @@
 
 import Foundation
 import UIKit
+import os.log
+
+enum Log {
+  
+  static func debug(_ log: OSLog, _ object: Any...) {
+    os_log(.debug, log: log, "%@", object.map { "\($0)" }.joined(separator: " "))
+  }
+  
+  static func error(_ log: OSLog, _ object: Any...) {
+    os_log(.error, log: log, "%@", object.map { "\($0)" }.joined(separator: " "))
+  }
+  
+}
+
+extension OSLog {
+  
+  @inline(__always)
+  private static func makeOSLogInDebug(_ factory: () -> OSLog) -> OSLog {
+#if DEBUG
+    return factory()
+#else
+    return .disabled
+#endif
+  }
+  
+  static let animator: OSLog = makeOSLogInDebug { OSLog.init(subsystem: "MatchedTransitionAnimator", category: "MatchedTransitionAnimator/Animator") }
+}
 
 // MARK: Implementations
+
+func error(_ condition: @autoclosure () -> Bool, _ message: String, file: StaticString = #file, line: UInt = #line) {
+  #if DEBUG
+  if condition() == false {
+    Log.error(.animator, "\(message) \(file):\(line)")
+  }
+  #endif
+}
 
 /*
 private struct Key: Hashable {
@@ -198,14 +233,14 @@ extension UIViewPropertyAnimator {
       addAnimations {
 
         if isReversed {
-          assert(containerView.subviews.contains(fromView))
-          assert(fromView.isDescendant(of: containerView))
+          error(containerView.subviews.contains(fromView), "\(fromView) is not in suitable state.")
+          error(fromView.isDescendant(of: containerView), "\(fromView) is not in suitable state.")
 
           snapshotView.center = fromFrameInContainerView.center
 
         } else {
-          assert(containerView.subviews.contains(toView))
-          assert(toView.isDescendant(of: containerView))
+          error(containerView.subviews.contains(toView), "\(toView) is not in suitable state.")
+          error(toView.isDescendant(of: containerView), "\(toView) is not in suitable state.")
 
           snapshotView.center = toFrameInContainerView.center
 
@@ -248,12 +283,12 @@ extension UIViewPropertyAnimator {
 
         if isReversed {
 
-          assert(toView.isDescendant(of: containerView), "The target view for moving is not in the hierarchy of container view, snapshot might move the wrong position.")
+          error(toView.isDescendant(of: containerView), "The target view for moving is not in the hierarchy of container view, snapshot might move the wrong position.")
           snapshotView.frame = fromFrameInContainerView
 
         } else {
 
-          assert(toView.isDescendant(of: containerView), "The target view for moving is not in the hierarchy of container view, snapshot might move the wrong position.")
+          error(toView.isDescendant(of: containerView), "The target view for moving is not in the hierarchy of container view, snapshot might move the wrong position.")
           snapshotView.frame = toFrameInContainerView
 
         }
