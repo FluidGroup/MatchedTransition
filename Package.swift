@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "MatchedTransition",
     platforms: [
-        .iOS(.v11),
+        .iOS(.v12),
     ],
     products: [
         .library(name: "MatchedTransition", targets: ["MatchedTransition"]),
